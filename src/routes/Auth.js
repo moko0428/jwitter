@@ -1,10 +1,12 @@
-import { async } from "@firebase/util";
 import { authService, firebaseInstance } from "fbase";
 import React, { useState } from "react";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  GithubAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
 
 const Auth = () => {
@@ -30,6 +32,7 @@ const Auth = () => {
       const auth = getAuth();
       if (newAccount) {
         data = await createUserWithEmailAndPassword(auth, email, password);
+        console.log(data);
       } else {
         data = await signInWithEmailAndPassword(auth, email, password);
         console.log(data);
@@ -39,18 +42,18 @@ const Auth = () => {
     }
   };
   const toggleAccount = () => setNewAccount((prev) => !prev);
+
   const onSocialClick = async (event) => {
     const {
       target: { name },
     } = event;
     let provider;
     if (name === "google") {
-      provider = new firebaseInstance.auth.GoogleAuthProvider();
-    } else if (name === "gitub") {
-      provider = new firebaseInstance.auth.GithubAuthProvider();
+      provider = new GoogleAuthProvider();
+    } else if (name === "github") {
+      provider = new GithubAuthProvider();
     }
-    const data = await authService.signInWithPopup(provider);
-    console.log(data);
+    await signInWithPopup(authService, provider);
   };
 
   return (
