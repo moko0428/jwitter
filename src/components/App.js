@@ -16,6 +16,7 @@ function App() {
         setUserObj(user);
       } else {
         setIsLoggendIn(false);
+        setUserObj(null);
       }
       setInit(true);
     });
