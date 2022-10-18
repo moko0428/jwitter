@@ -5,6 +5,7 @@ import React, { useState } from "react";
 const Jweet = ({ jweetObj, isOwner }) => {
   const [editing, setEditing] = useState(false);
   const [newJweet, setNewJweet] = useState(jweetObj.text);
+
   const JweetTextRef = doc(dbService, "jweets", `${jweetObj.id}`);
 
   //트윗 삭제 버튼
